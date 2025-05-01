@@ -6,6 +6,8 @@ const fs = require('fs');
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 function get_entries() {
     let data = fs.readFileSync('db.json', 'utf8');
@@ -23,16 +25,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/entries', (req, res) => {    
     res.status(200).json(get_entries());
-    console.log('Hello World!');
+    console.log('Fetched entries');
 });
 
-app.post('/entry', (req, res) => {
-    const { name, message } = req.body;
-    if (!name || !message) {
+app.post('/form-entry', (req, res) => {
+    if (!req.body.name || !req.body.message) {
+        console.log(`failed to add entry ${JSON.stringify(req.body)}`);
         return res.status(400);
     }
-    add_entry(name, message);
+    add_entry(req.body.name, req.body.message);
     res.status(201).json(get_entries());
+    console.log(`Added entry ${JSON.stringify(req.body)}`);
 });
 
 app.listen(3000, () => {

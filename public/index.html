@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #entries {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Guestbook</h1>
+
+  <form id="guestbook-form">
+    <input type="text" id="name" placeholder="Your name" required>
+    <input type="text" id="message" placeholder="Your message" required>
+    <button type="submit">Sign</button>
+  </form>
+
+  <h2>Entries:</h2>
+  <div id="entries">Loading...</div>
+
+  <script>
+    function populate(data) {
+      const entries = JSON.parse(data);
+      return entries.map(entry => `<p><strong>${entry.name}</strong>: ${entry.message}</p>`).join('');
+    }
+    
+    async function fetchEntries() {
+      const res = await fetch('/entries');
+      const data = await res.text(); // assuming the server returns HTML
+      document.getElementById('entries').innerHTML = populate(data);
+    }
+
+    document.getElementById('guestbook-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const message = document.getElementById('message').value;
+
+      await fetch('/form-entry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, message })
+      });
+
+      document.getElementById('guestbook-form').reset();
+      fetchEntries(); // refresh entries immediately after submission
+    });
+
+    fetchEntries(); // initial load
+  </script>
+
+</body>
+</html>
