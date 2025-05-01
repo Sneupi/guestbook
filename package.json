@@ -1,8 +1,10 @@
 {
   "scripts": {
+    "build": "tsc server.ts",
     "start": "node server.js"
   },
   "dependencies": {
+    "@types/node": "^22.15.3",
     "express": "^5.1.0"
   }
 }
