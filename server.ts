@@ -1,23 +1,29 @@
 /**
  * Server node for guestbook
  */
+import { DatabaseSync } from 'node:sqlite';
 const express = require('express');
-const fs = require('fs');
 const app = express();
+
+type Entry = {
+    name: string;
+    message: string;
+}
+
+let conn = new DatabaseSync('db.sqlite', { open: true });
+conn.exec("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, message TEXT);");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 function get_entries() {
-    let data = fs.readFileSync('db.json', 'utf8');
-    return JSON.parse(data).entries;
+    let result = conn.prepare("SELECT * FROM entries ORDER BY id ASC;").all();
+    return result.map((row: any) => {
+        return { name: row.name, message: row.message } as Entry});
 }
 function add_entry(name, message) {
-    let data = fs.readFileSync('db.json', 'utf8');
-    let entries = JSON.parse(data).entries;
-    entries.push({ name: name, message: message });
-    fs.writeFileSync('db.json', JSON.stringify({ entries: entries }, null, 2));
+    conn.prepare("INSERT INTO entries (name, message) VALUES (?, ?);").run(name, message);
 }
 
 app.use(express.json());
