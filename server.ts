@@ -22,19 +22,19 @@ function get_entries() {
     return result.map((row: any) => {
         return { name: row.name, message: row.message } as Entry});
 }
-function add_entry(name, message) {
+function add_entry(name: string, message: string) {
     conn.prepare("INSERT INTO entries (name, message) VALUES (?, ?);").run(name, message);
 }
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/entries', (req, res) => {    
+app.get('/entries', (req: any, res: any) => {    
     res.status(200).json(get_entries());
     console.log('Fetched entries');
 });
 
-app.post('/form-entry', (req, res) => {
+app.post('/form-entry', (req: any, res: any) => {
     if (!req.body.name || !req.body.message) {
         console.log(`failed to add entry ${JSON.stringify(req.body)}`);
         return res.status(400);
