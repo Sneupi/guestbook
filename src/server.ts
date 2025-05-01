@@ -15,7 +15,7 @@ conn.exec("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREM
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('src/public'));
 
 function get_entries() {
     let result = conn.prepare("SELECT * FROM entries ORDER BY id ASC;").all();
