@@ -34,7 +34,7 @@ app.get('/entries', (req: any, res: any) => {
     console.log('Fetched entries');
 });
 
-app.post('/form-entry', (req: any, res: any) => {
+app.post('/entry', (req: any, res: any) => {
     if (!req.body.name || !req.body.message) {
         console.log(`failed to add entry ${JSON.stringify(req.body)}`);
         return res.status(400);

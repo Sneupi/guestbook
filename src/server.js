@@ -26,7 +26,7 @@ app.get('/entries', (req, res) => {
     res.status(200).json(get_entries());
     console.log('Fetched entries');
 });
-app.post('/form-entry', (req, res) => {
+app.post('/entry', (req, res) => {
     if (!req.body.name || !req.body.message) {
         console.log(`failed to add entry ${JSON.stringify(req.body)}`);
         return res.status(400);
