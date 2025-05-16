@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Server node for guestbook
  */
-const node_sqlite_1 = require("node:sqlite");
-const express = require('express');
+import { DatabaseSync } from 'node:sqlite';
+import express from 'express';
 const app = express();
-let conn = new node_sqlite_1.DatabaseSync('db.sqlite', { open: true });
+let conn = new DatabaseSync('db.sqlite', { open: true });
 conn.exec("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, message TEXT);");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

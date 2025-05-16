@@ -2,13 +2,9 @@
  * Server node for guestbook
  */
 import { DatabaseSync } from 'node:sqlite';
-const express = require('express');
+import { Entry } from './entry';
+import express from 'express';
 const app = express();
-
-type Entry = {
-    name: string;
-    message: string;
-}
 
 let conn = new DatabaseSync('db.sqlite', { open: true });
 conn.exec("CREATE TABLE IF NOT EXISTS entries (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, message TEXT);");
