@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="client.css">
 </head>
 <body>
 
-  <h1>Guestbook</h1>
+  <h1>Sign My Guestbook!</h1>
 
   <form id="guestbook-form">
     <input type="text" id="name" placeholder="Your name" required>
@@ -13,8 +14,16 @@
     <button type="submit">Sign</button>
   </form>
 
-  <h2>Entries:</h2>
-  <div id="entries">Loading...</div>
+  <table id="guestbook-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Message</th>
+      </tr>
+    </thead>
+    <tbody id="guestbook-entries">
+      <!-- Entries will be populated here -->
+    </tbody>
 
   <script src="client.js" type="module"></script>
 

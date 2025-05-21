@@ -3,15 +3,22 @@ import { Entry } from "../entry";
 
 // Populate entry HTML from JSON
 function populate(data: Array<Entry>) {
-    let entries = document.getElementById("entries");
+    let entries = document.getElementById("guestbook-entries");
     if (!entries) return;
     entries.innerHTML = ""; // Clear existing entries
 
-    for (let entry of data) {
-        let div = document.createElement("div");
-        div.className = "entry";
-        div.innerHTML = `<p>${entry.name}: ${entry.message}</p>`;
-        entries.appendChild(div);
+    for (let entry of data.reverse()) {
+        let row = document.createElement("tr");
+        row.className = "entry";
+        let msg = document.createElement("td");
+        msg.innerText = entry.message;
+        msg.className = "entry-message";
+        let name = document.createElement("td");
+        name.innerText = entry.name;
+        name.className = "entry-name";
+        row.appendChild(name);
+        row.appendChild(msg);
+        entries.appendChild(row);
     }
 }
 

@@ -1,0 +1,38 @@
+* {
+    font-size: 5vw;
+}
+h1 {
+    font-size: 7vw;
+    text-align: center;
+}
+form {
+    direction: flex;
+    flex-flow: row wrap;
+}
+input {
+    vertical-align: middle;
+    width: 34vw;
+    margin: 5px 5px 5px 0;
+    padding: 2vw;
+    background-color: #fff;
+}
+button {
+  width: 18vw;
+  padding: 2vw;
+  background-color:lightgrey;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+table {
+    table-layout: fixed;
+    border-spacing: 4vw;
+    width: 100%;
+}
+td {
+    border-bottom: 2px solid #000;
+    padding: 0px 7px;
+}
+
+.entry-name {
+    text-align: center;
+}
